@@ -2,6 +2,70 @@
 
 A **safe, modular, cross-platform bash utility** for managing and cleaning up OpenShift users and identities associated with an LDAP provider.
 
+## 🛠 Makefile Options
+
+This project includes a Makefile to simplify common operations. Using the Makefile provides consistent command execution with predefined options and ensures proper file paths.
+
+### Common Makefile Targets
+
+| Target | Description |
+| ------ | ----------- |
+| `make scan` | Find users and create CSV report (no deletions) |
+| `make process` | Delete users from existing CSV report |
+| `make dry-run` | Preview deletions (creates CSV if missing) |
+| `make full` | Scan and delete in one step |
+| `make test-gen` | Generate test users for testing |
+| `make test-clean` | Remove test users |
+| `make clean` | Remove generated CSV and log files |
+| `make help` | Show available commands and options |
+
+### Usage Examples
+
+**Scan for users without making changes:**
+```bash
+make scan
+```
+
+**Perform a dry run to preview changes:**
+```bash
+make dry-run
+```
+
+**Process users from an existing scan:**
+```bash
+make process
+```
+
+**Generate test users for testing:**
+```bash
+make test-gen TEST_COUNT=50 TEST_PREFIX=qa-user
+```
+
+**Remove test users:**
+```bash
+make test-clean
+```
+
+### Customizable Variables
+
+You can override default variables:
+
+```bash
+# Custom CSV location
+make scan CSV_FILE=./custom/path/users.csv
+
+# Custom exclude file
+make process EXCLUDE_FILE=./custom/path/excluded_users.txt
+
+# Generate specific number of test users
+make test-gen TEST_COUNT=100
+
+# Custom test user prefix
+make test-gen TEST_PREFIX=qa-user
+```
+
+---
+
 Supports:
 - LDAP provider-based user and identity cleanup
 - Bulk scanning and deletion of OpenShift identities and users
