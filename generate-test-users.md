@@ -81,7 +81,7 @@ chmod +x scripts/generate_test_users.sh scripts/common.sh
 | --------------- | -------- | ------------------------------ | ------------------------------------ |
 | `--count`       | Number   | Number of test users to create | `20`                                 |
 | `--prefix`      | String   | Username prefix                | `test-user`                          |
-| `--provider`    | String   | LDAP provider prefix           | `pnc_rnd_oim`                        |
+| `--provider`    | String   | LDAP provider prefix           | `ceo_rnd_oim`                        |
 | `--dry-run`     | None     | Preview without changes        | `false`                              |
 | `--cleanup`     | None     | Remove test users              | `false`                              |
 | `--csv`         | Path     | CSV file location              | `../reports/test_users.csv`          |
@@ -118,7 +118,7 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 ./scripts/generate_test_users.sh --count 50 --yes
 
 # 2. Test cleanup script
-./scripts/clean-ocp-users.sh --dry-run --provider pnc_rnd_oim
+./scripts/clean-ocp-users.sh --dry-run --provider ceo_rnd_oim
 
 # 3. Clean up test users
 ./scripts/generate_test_users.sh --cleanup --yes
@@ -187,7 +187,7 @@ The following test scenarios have been thoroughly validated across different env
 oc get users | grep "^test-user-[0-9]\{3\}" | wc -l
 
 # Validate identities were properly linked
-oc get identities | grep "pnc_rnd_oim:test-user" | wc -l
+oc get identities | grep "ceo_rnd_oim:test-user" | wc -l
 ```
 
 #### Advanced Operational Testing
@@ -202,7 +202,7 @@ oc get identities | grep "pnc_rnd_oim:test-user" | wc -l
 # Complete cleanup validation sequence
 ./scripts/generate_test_users.sh --cleanup --yes
 oc get users | grep "test-user" | wc -l  # Should return 0
-oc get identities | grep "pnc_rnd_oim:" | wc -l  # Should return 0
+oc get identities | grep "ceo_rnd_oim:" | wc -l  # Should return 0
 ```
 
 #### Error Handling and Reporting
@@ -224,16 +224,16 @@ time ./scripts/generate_test_users.sh --count 50 --yes | grep "Progress" > progr
 
 ```csv
 identity,user,provider
-pnc_rnd_oim:test-user-001,test-user-001,pnc_rnd_oim
-pnc_rnd_oim:test-user-002,test-user-002,pnc_rnd_oim
+ceo_rnd_oim:test-user-001,test-user-001,ceo_rnd_oim
+ceo_rnd_oim:test-user-002,test-user-002,ceo_rnd_oim
 ```
 
 ### Log File (`../reports/generate_test_users.log`)
 
 ```
 [2025-05-17 14:30:15] Creating user: test-user-001
-[2025-05-17 14:30:16] Creating identity: pnc_rnd_oim:test-user-001
-[2025-05-17 14:30:17] Progress: 10/50 users created successfully
+[2025-05-17 14:30:15] Creating user: test-user-001
+[2025-05-17 14:30:16] Creating identity: ceo_rnd_oim:test-user-001
 ```
 
 ## Safety Features
@@ -308,7 +308,7 @@ oc get users | grep test-user
 ```bash
 # Full test cycle
 ./scripts/generate_test_users.sh --count 100 --yes
-./scripts/clean-ocp-users.sh --provider pnc_rnd_oim --yes
+./scripts/clean-ocp-users.sh --provider ceo_rnd_oim --yes
 ./scripts/generate_test_users.sh --cleanup --yes
 ```
 

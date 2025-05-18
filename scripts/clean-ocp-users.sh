@@ -480,7 +480,7 @@ Clean up OpenShift users and identities based on LDAP provider.
 Compatible with Bash 3.2+ (macOS default bash).
 
 Options:
-  --provider PREFIX    LDAP provider prefix (default: pnc_rnd_oim)
+  --provider PREFIX    LDAP provider prefix (default: ceo_rnd_oim)
   --exclude-file FILE  File containing users to exclude (one per line)
   --dry-run           Show what would be deleted without making changes
   --csv FILE          CSV file location (default: ../reports/users.csv)
@@ -493,7 +493,7 @@ Options:
   --help, -h          Show this help message
 
 Example:
-  $(basename "$0") --provider pnc_rnd_oim --exclude-file safe_users.txt --dry-run
+  $(basename "$0") --provider ceo_rnd_oim --exclude-file safe_users.txt --dry-run
 
 Note: For better performance, consider installing Bash 4.0+ via Homebrew:
   brew install bash

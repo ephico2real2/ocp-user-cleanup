@@ -495,7 +495,7 @@ Compatible with Bash 3.2+ (macOS default bash).
 Options:
   --count N          Number of users to create (default: 20)
   --prefix PREFIX    Username prefix (default: test-user)
-  --provider PREFIX  LDAP provider prefix (default: pnc_rnd_oim)
+  --provider PREFIX  LDAP provider prefix (default: ceo_rnd_oim)
   --dry-run         Show what would be done without making changes
   --cleanup         Remove previously generated test users
   --csv FILE        CSV file location for user records
