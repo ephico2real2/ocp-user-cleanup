@@ -1,0 +1,578 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Script to clean up OpenShift users and identities based on LDAP provider
+# Takes exclusion file into account before performing deletions
+# Compatible with Bash 3.2+ (macOS default)
+
+# Source common functions
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Configuration
+LDAP_PROVIDER_PREFIX="ceo_rnd_oim"
+MAX_RETRIES=3
+RETRY_DELAY=5
+DRY_RUN=false
+CSV_FILE="${SCRIPT_DIR}/../reports/users.csv"
+LOG_FILE="${SCRIPT_DIR}/../reports/cleanup.log"
+EXCLUDE_FILE=""
+OS_TYPE="unknown"
+QUIET=false
+DEBUG=false
+OC_TIMEOUT=15 # Timeout in seconds for OpenShift commands
+AUTO_CONFIRM=false
+
+# Initialize counters
+SUCCESS_COUNT=0
+FAILED_COUNT=0
+SKIPPED_COUNT=0
+
+# Detect OS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    OS_TYPE="macos"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    OS_TYPE="linux"
+fi
+
+# Define log_message function early (before sourcing common.sh)
+log_message() {
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    local message="[$timestamp] $1"
+    
+    # Always output to console unless QUIET is set
+    if [ "$QUIET" != "true" ]; then
+        echo "$message"
+    fi
+    
+    # Log to file if LOG_FILE is set
+    if [ -n "${LOG_FILE:-}" ]; then
+        echo "$message" >> "$LOG_FILE"
+    fi
+}
+
+# Enhanced safe_confirm with AUTO_CONFIRM support
+safe_confirm() {
+    local message="$1"
+    
+    # Skip confirmation if AUTO_CONFIRM is enabled
+    if [ "$AUTO_CONFIRM" = true ]; then
+        log_message "Auto-confirmed: $message"
+        return 0
+    fi
+    
+    # Otherwise use the standard confirmation process
+    read -p "$message (y/N): " -n 1 -r
+    echo
+    [[ ! $REPLY =~ ^[Yy]$ ]] && {
+        log_message "Operation cancelled by user."
+        exit 0
+    }
+}
+
+# Source common functions if file exists (after defining our own functions)
+if [ -f "${SCRIPT_DIR}/common.sh" ]; then
+    # Check if common.sh is compatible with this bash version
+    if bash -n "${SCRIPT_DIR}/common.sh" 2>/dev/null; then
+        source "${SCRIPT_DIR}/common.sh"
+        log_message "Loaded common functions from ${SCRIPT_DIR}/common.sh"
+    else
+        log_message "Warning: common.sh has syntax errors, skipping"
+    fi
+fi
+
+# Enhanced retry_command with safer execution
+retry_command() {
+    local cmd=("$@")
+    local attempt=0
+    while [ $attempt -lt $MAX_RETRIES ]; do
+        log_message "Executing: ${cmd[*]} (attempt $((attempt+1))/$MAX_RETRIES)"
+        if "${cmd[@]}"; then
+            log_message "Command succeeded: ${cmd[*]}"
+            return 0
+        fi
+        attempt=$((attempt+1))
+        if [ $attempt -lt $MAX_RETRIES ]; then
+            log_message "Retrying in $RETRY_DELAY seconds: ${cmd[*]}"
+            sleep $RETRY_DELAY
+        fi
+    done
+    log_message "Failed after $MAX_RETRIES retries: ${cmd[*]}"
+    return 1
+}
+
+# Run OpenShift command with timeout and retry
+run_oc_cmd() {
+    local cmd=("$@")
+    [ "$DEBUG" = true ] && log_message "DEBUG: Running command: ${cmd[*]}"
+    
+    local attempt=0
+    while [ $attempt -lt $MAX_RETRIES ]; do
+        local output
+        # Use perl for timeout on older systems that don't have timeout command
+        if command -v timeout >/dev/null 2>&1; then
+            output=$(timeout $OC_TIMEOUT "${cmd[@]}" 2>&1) && {
+                [ "$DEBUG" = true ] && log_message "DEBUG: Command succeeded: ${cmd[*]}"
+                echo "$output"
+                return 0
+            }
+        else
+            # Fallback without timeout
+            output=$("${cmd[@]}" 2>&1) && {
+                [ "$DEBUG" = true ] && log_message "DEBUG: Command succeeded: ${cmd[*]}"
+                echo "$output"
+                return 0
+            }
+        fi
+        
+        attempt=$((attempt+1))
+        log_message "Command failed (attempt $attempt/$MAX_RETRIES): ${cmd[*]}"
+        [ "$DEBUG" = true ] && log_message "DEBUG: Error: $output"
+        
+        if [ $attempt -lt $MAX_RETRIES ]; then
+            log_message "Retrying in $RETRY_DELAY seconds..."
+            sleep $RETRY_DELAY
+        fi
+    done
+    
+    log_message "ERROR: Command failed after $MAX_RETRIES attempts: ${cmd[*]}"
+    return 1
+}
+
+# Check dependencies and OpenShift connection
+check_dependencies() {
+    log_message "Checking dependencies..."
+    
+    # Check required commands
+    for cmd in oc jq; do
+        if ! command -v $cmd &>/dev/null; then
+            if [[ "$OS_TYPE" == "macos" ]]; then
+                log_message "ERROR: '$cmd' is not installed. Install using: brew install $cmd"
+            else
+                log_message "ERROR: '$cmd' is not installed. Install using your package manager."
+            fi
+            exit 1
+        fi
+    done
+    log_message "All required commands found"
+
+    # Check if logged in to OpenShift
+    log_message "Checking OpenShift connection..."
+    local whoami_output
+    if command -v timeout >/dev/null 2>&1; then
+        whoami_output=$(timeout $OC_TIMEOUT oc whoami 2>&1) || {
+            log_message "ERROR: Not logged in to OpenShift. Run 'oc login' first."
+            log_message "Details: $whoami_output"
+            exit 1
+        }
+    else
+        whoami_output=$(oc whoami 2>&1) || {
+            log_message "ERROR: Not logged in to OpenShift. Run 'oc login' first."
+            log_message "Details: $whoami_output"
+            exit 1
+        }
+    fi
+    
+    log_message "Logged in as: $whoami_output"
+    
+    # Check permissions
+    log_message "Checking user permissions..."
+    if ! oc get users --request-timeout=5s &>/dev/null; then
+        log_message "ERROR: Cannot access User resources. Check permissions."
+        exit 1
+    fi
+    
+    log_message "Dependencies and connection verified"
+}
+
+# Initialize CSV file
+initialize_csv() {
+    mkdir -p "$(dirname "$CSV_FILE")"
+    echo "identity,user,excluded" > "$CSV_FILE"
+    log_message "CSV file initialized: $CSV_FILE"
+}
+
+# Create necessary directories
+ensure_directories() {
+    # Ensure reports directory exists
+    local reports_dir
+    reports_dir="$(dirname "$CSV_FILE")"
+    if [ ! -d "$reports_dir" ]; then
+        log_message "Creating reports directory: $reports_dir"
+        mkdir -p "$reports_dir" || {
+            log_message "ERROR: Failed to create reports directory: $reports_dir"
+            exit 1
+        }
+    fi
+
+    # If logging is enabled, ensure log directory exists
+    if [ -n "${LOG_FILE:-}" ]; then
+        local log_dir
+        log_dir="$(dirname "$LOG_FILE")"
+        if [ ! -d "$log_dir" ]; then
+            log_message "Creating log directory: $log_dir"
+            mkdir -p "$log_dir" || {
+                log_message "ERROR: Failed to create log directory: $log_dir"
+                exit 1
+            }
+        fi
+    fi
+}
+
+# Load exclusion list (bash 3.2 compatible - uses temp file)
+load_exclusions() {
+    log_message "Loading exclusion list..."
+    
+    # Create temporary file to store processed exclusions
+    local temp_exclude_file
+    temp_exclude_file=$(mktemp)
+    
+    if [ -n "$EXCLUDE_FILE" ]; then
+        if [ ! -f "$EXCLUDE_FILE" ]; then
+            log_message "ERROR: Exclusion file not found: $EXCLUDE_FILE"
+            exit 1
+        fi
+        
+        local user_count=0
+        while IFS= read -r user || [ -n "$user" ]; do
+            # Skip empty lines and comments
+            if [[ -n "$user" && ! "$user" =~ ^[[:space:]]*# ]]; then
+                # Trim whitespace (bash 3.2 compatible)
+                user=$(echo "$user" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+                if [ -n "$user" ]; then
+                    echo "$user" >> "$temp_exclude_file"
+                    user_count=$((user_count + 1))
+                fi
+            fi
+        done < "$EXCLUDE_FILE"
+        log_message "Loaded $user_count users from exclusion file"
+        
+        # Set global variable for use in other functions
+        PROCESSED_EXCLUDE_FILE="$temp_exclude_file"
+    else
+        log_message "No exclusion file specified - all users will be processed"
+        PROCESSED_EXCLUDE_FILE=""
+        rm -f "$temp_exclude_file"
+    fi
+}
+
+# Check if user is excluded (bash 3.2 compatible)
+is_user_excluded() {
+    local user="$1"
+    [ -z "$user" ] && return 1
+    [ -z "$PROCESSED_EXCLUDE_FILE" ] && return 1
+    [ ! -f "$PROCESSED_EXCLUDE_FILE" ] && return 1
+    
+    # Use grep to check if user exists in processed exclude file
+    grep -Fxq "$user" "$PROCESSED_EXCLUDE_FILE" 2>/dev/null
+}
+
+# Find users with specified LDAP provider
+find_users() {
+    initialize_csv
+    
+    log_message "Finding users and identities for provider: $LDAP_PROVIDER_PREFIX"
+    
+    # Get identities in a separate call for better reliability
+    log_message "Retrieving identities from OpenShift API..."
+    local identities_json
+    if ! identities_json=$(run_oc_cmd oc get identity -o json); then
+        log_message "ERROR: Failed to retrieve identities"
+        exit 1
+    fi
+    log_message "Successfully retrieved identities from OpenShift API"
+    
+    # Extract identities with our provider
+    log_message "Filtering identities for provider: $LDAP_PROVIDER_PREFIX"
+    local identities
+    if ! identities=$(echo "$identities_json" | jq -r ".items[] | select(.providerName == \"$LDAP_PROVIDER_PREFIX\") | .metadata.name" 2>&1); then
+        log_message "ERROR: Failed to parse identity information"
+        log_message "Error details: $identities"
+        exit 1
+    fi
+    
+    # Check if we found any identities
+    if [ -z "$identities" ]; then
+        log_message "WARNING: No identities found matching provider: $LDAP_PROVIDER_PREFIX"
+        # In dry run mode, show what would happen if there were identities
+        if [ "$DRY_RUN" = true ]; then
+            log_message "[DRY-RUN] No identities to process for provider: $LDAP_PROVIDER_PREFIX"
+        fi
+        return 0
+    fi
+
+    # Count total identities for progress reporting
+    local total_identities
+    total_identities=$(echo "$identities" | wc -l)
+    log_message "Found $total_identities identities to process"
+
+    # Process each identity individually to avoid issues with large data sets
+    local total_count=0
+    local excluded_count=0
+    
+    while IFS= read -r identity; do
+        [ -z "$identity" ] && continue
+        total_count=$((total_count+1))
+        
+        # Progress reporting
+        if [ $((total_count % 5)) -eq 0 ] || [ "$total_count" -eq 1 ]; then
+            log_message "Progress: Processing identity $total_count/$total_identities ($identity)..."
+        fi
+        
+        # Get user details for this identity
+        [ "$DEBUG" = true ] && log_message "DEBUG: Getting details for identity: $identity"
+        local identity_json
+        if ! identity_json=$(run_oc_cmd oc get identity "$identity" -o json); then
+            log_message "WARNING: Could not retrieve details for identity: $identity"
+            continue
+        fi
+        
+        # Extract user from identity
+        local user
+        if ! user=$(echo "$identity_json" | jq -r '.user.name // ""'); then
+            log_message "WARNING: Could not extract user from identity: $identity"
+            continue
+        fi
+        
+        [ "$DEBUG" = true ] && log_message "DEBUG: Found user '$user' for identity '$identity'"
+        local excluded="false"
+        
+        # Check if user is in exclusion list
+        if [ -n "$user" ] && is_user_excluded "$user"; then
+            excluded="true"
+            excluded_count=$((excluded_count+1))
+            log_message "Found excluded user: $user"
+        fi
+        
+        # Add to CSV
+        echo "$identity,$user,$excluded" >> "$CSV_FILE"
+        
+        # In dry-run mode, print what would be deleted
+        if [ "$DRY_RUN" = true ]; then
+            if [ "$excluded" = "false" ]; then
+                log_message "[DRY-RUN] Would delete user: $user"
+                log_message "[DRY-RUN] Would delete identity: $identity"
+            else
+                log_message "[DRY-RUN] Would skip excluded user: $user"
+            fi
+        fi
+        
+    done <<< "$identities"
+    
+    log_message "Summary: Found $total_count identities ($excluded_count excluded, $((total_count - excluded_count)) actionable)"
+    
+    if [ "$DRY_RUN" = true ]; then
+        log_message "[DRY-RUN] Dry run complete. No actual deletions performed."
+        log_message "[DRY-RUN] CSV file created with findings: $CSV_FILE"
+    fi
+}
+
+# Delete users and their identities
+delete_users() {
+    if [ ! -f "$CSV_FILE" ]; then
+        log_message "ERROR: CSV file not found: $CSV_FILE"
+        exit 1
+    fi
+    
+    local total=$(wc -l < "$CSV_FILE" | tr -d ' ' || echo 0)
+    total=$((total > 0 ? total - 1 : 0))  # Subtract header line, ensure non-negative
+    if [ $total -eq 0 ]; then
+        log_message "No users found to process"
+        return 0
+    fi
+    
+    local excluded_count=$(grep -c ",true$" "$CSV_FILE" 2>/dev/null || echo 0)
+    excluded_count=${excluded_count:-0}  # ensure it's numeric
+    local actionable=$((total >= excluded_count ? total - excluded_count : 0))
+    
+    log_message "Processing $total entries ($excluded_count excluded, $actionable actionable)..."
+    
+    if [ "$DRY_RUN" = true ]; then
+        log_message "[DRY-RUN] Would process $actionable users for deletion"
+        log_message "[DRY-RUN] Use without --dry-run to perform actual deletions"
+        return 0
+    fi
+    
+    if [ $actionable -gt 0 ]; then
+        safe_confirm "Are you sure you want to delete $actionable users and their identities?"
+    fi
+    
+    local processed=0
+    SUCCESS_COUNT=0
+    FAILED_COUNT=0
+    SKIPPED_COUNT=0
+    
+    while IFS=, read -r identity user excluded; do
+        [ -z "$identity" ] && continue  # Skip empty lines
+        processed=$((processed+1))
+        
+        if [ "$excluded" = "true" ]; then
+            SKIPPED_COUNT=$((SKIPPED_COUNT+1))
+            log_message "Skipping excluded: $user"
+            continue
+        fi
+        
+        local success=true
+        
+        # Delete user if exists
+        if [ -n "$user" ]; then
+            log_message "Deleting user: $user"
+            if ! retry_command oc delete user "$user" --request-timeout=15s; then
+                # Check if user no longer exists
+                if ! oc get user "$user" --request-timeout=10s &>/dev/null; then
+                    log_message "User already deleted: $user"
+                else
+                    success=false
+                    log_message "ERROR: Failed to delete user: $user"
+                fi
+            fi
+        fi
+        
+        # Delete identity
+        log_message "Deleting identity: $identity"
+        if ! retry_command oc delete identity "$identity" --request-timeout=15s; then
+            # Check if identity no longer exists
+            if ! oc get identity "$identity" --request-timeout=10s &>/dev/null; then
+                log_message "Identity already deleted: $identity"
+            else
+                success=false
+                log_message "ERROR: Failed to delete identity: $identity"
+            fi
+        fi
+        
+        if [ "$success" = true ]; then
+            SUCCESS_COUNT=$((SUCCESS_COUNT+1))
+        else
+            FAILED_COUNT=$((FAILED_COUNT+1))
+        fi
+        
+        # Progress update
+        if [ $((processed % 5)) -eq 0 ] || [ "$processed" -eq "$total" ]; then
+            local percent=$((processed * 100 / total))
+            log_message "Progress: $processed/$total ($percent%) (Success: $SUCCESS_COUNT, Failed: $FAILED_COUNT, Skipped: $SKIPPED_COUNT)"
+        fi
+    done < <(tail -n +2 "$CSV_FILE")
+    
+    log_message "Cleanup complete:"
+    log_message "  Success: $SUCCESS_COUNT"
+    log_message "  Failed: $FAILED_COUNT" 
+    log_message "  Skipped: $SKIPPED_COUNT"
+    log_message "  Total processed: $((SUCCESS_COUNT + FAILED_COUNT + SKIPPED_COUNT))"
+}
+
+# Show usage information
+show_help() {
+    cat << EOF
+Usage: $(basename "$0") [OPTIONS]
+
+Clean up OpenShift users and identities based on LDAP provider.
+Compatible with Bash 3.2+ (macOS default bash).
+
+Options:
+  --provider PREFIX    LDAP provider prefix (default: pnc_rnd_oim)
+  --exclude-file FILE  File containing users to exclude (one per line)
+  --dry-run           Show what would be deleted without making changes
+  --csv FILE          CSV file location (default: ../reports/users.csv)
+  --log FILE          Log file location (default: ../reports/cleanup.log)
+  --quiet             Suppress console output (still logs to file)
+  --debug             Enable debug output
+  --yes, -y           Auto-confirm deletions (non-interactive mode)
+  --max-retries N     Number of retries for failed operations (1-10, default: 3)
+  --retry-delay N     Delay between retries in seconds (1-60, default: 5)
+  --help, -h          Show this help message
+
+Example:
+  $(basename "$0") --provider pnc_rnd_oim --exclude-file safe_users.txt --dry-run
+
+Note: For better performance, consider installing Bash 4.0+ via Homebrew:
+  brew install bash
+
+EOF
+    exit 0
+}
+
+# Parse command line arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --provider) shift; LDAP_PROVIDER_PREFIX="$1" ;;
+        --exclude-file) shift; EXCLUDE_FILE="$1" ;;
+        --dry-run) DRY_RUN=true ;;
+        --csv) shift; CSV_FILE="$1" ;;
+        --log) shift; LOG_FILE="$1" ;;
+        --quiet) QUIET=true ;;
+        --debug) DEBUG=true ;;
+        --yes|-y) AUTO_CONFIRM=true ;;
+        --max-retries)
+            shift
+            if [[ ! "$1" =~ ^[0-9]+$ ]] || [ "$1" -lt 1 ] || [ "$1" -gt 10 ]; then
+                log_message "ERROR: Invalid max-retries value: $1 (must be between 1 and 10)"
+                exit 1
+            fi
+            MAX_RETRIES="$1"
+            ;;
+        --retry-delay)
+            shift
+            if [[ ! "$1" =~ ^[0-9]+$ ]] || [ "$1" -lt 1 ] || [ "$1" -gt 60 ]; then
+                log_message "ERROR: Invalid retry-delay value: $1 (must be between 1 and 60)"
+                exit 1
+            fi
+            RETRY_DELAY="$1"
+            ;;
+        --help|-h) show_help ;;
+        *) log_message "ERROR: Unknown parameter: $1"; exit 1 ;;
+    esac
+    shift
+done
+
+# Cleanup function for temp files
+cleanup() {
+    [ -n "${PROCESSED_EXCLUDE_FILE:-}" ] && [ -f "$PROCESSED_EXCLUDE_FILE" ] && rm -f "$PROCESSED_EXCLUDE_FILE"
+}
+
+# Set trap to cleanup temp files on exit
+trap cleanup EXIT
+
+# Main function
+main() {
+    # Initialize logging
+    if [ -n "${LOG_FILE:-}" ]; then
+        mkdir -p "$(dirname "$LOG_FILE")"
+        > "$LOG_FILE"  # Start with empty log file
+    fi
+    
+    log_message "Starting OpenShift user cleanup script (Bash 3.2 compatible)"
+    log_message "LDAP Provider: $LDAP_PROVIDER_PREFIX"
+    log_message "Dry Run Mode: $DRY_RUN"
+    [ "$DEBUG" = true ] && log_message "Debug Mode: Enabled"
+    [ "$QUIET" = true ] && echo "Quiet mode enabled - check log file for details: $LOG_FILE"
+    [ -n "$EXCLUDE_FILE" ] && log_message "Exclusion file: $EXCLUDE_FILE"
+    
+    check_dependencies
+    ensure_directories
+    load_exclusions
+    find_users
+    
+    # Only call delete_users if not in dry run mode
+    if [ "$DRY_RUN" = false ]; then
+        delete_users
+    fi
+    
+    if [ $FAILED_COUNT -eq 0 ]; then
+        log_message "All operations completed successfully"
+        return 0
+    else
+        log_message "Completed with $FAILED_COUNT failures"
+        return 1
+    fi
+}
+
+################################################################################
+# Function definitions above this line
+# Main script execution starts here
+
+# Execute main function and exit with appropriate status
+if ! main; then
+    exit 1
+fi
+
+exit 0

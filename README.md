@@ -82,9 +82,9 @@ oc_user_cleanup/
 ## 📄 Exclusion File Example (`excluded_users.txt`)
 
 ```
-pj61323
-pj42928
-pj50000
+abc31323
+cde72928
+juk78000
 ```
 
 Location:

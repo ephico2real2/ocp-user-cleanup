@@ -1,0 +1,133 @@
+[2025-05-17 21:38:23] Starting OpenShift user cleanup script (Bash 3.2 compatible)
+[2025-05-17 21:38:23] LDAP Provider: ceo_rnd_oim
+[2025-05-17 21:38:23] Dry Run Mode: true
+[2025-05-17 21:38:23] Exclusion file: ./config/excluded_users.txt
+[2025-05-17 21:38:23] Checking dependencies...
+[2025-05-17 21:38:23] All required commands found
+[2025-05-17 21:38:23] Checking OpenShift connection...
+[2025-05-17 21:38:23] Logged in as: kubeadmin
+[2025-05-17 21:38:23] Checking user permissions...
+[2025-05-17 21:38:23] Dependencies and connection verified
+[2025-05-17 21:38:23] Loading exclusion list...
+[2025-05-17 21:38:24] Loaded 3 users from exclusion file
+[2025-05-17 21:38:24] CSV file initialized: ./reports/oc_user_audit.csv
+[2025-05-17 21:38:24] Finding users and identities for provider: ceo_rnd_oim
+[2025-05-17 21:38:24] Retrieving identities from OpenShift API...
+[2025-05-17 21:38:24] Successfully retrieved identities from OpenShift API
+[2025-05-17 21:38:24] Filtering identities for provider: ceo_rnd_oim
+[2025-05-17 21:38:24] Found 50 identities to process
+[2025-05-17 21:38:24] Progress: Processing identity 1/50 (ceo_rnd_oim:test-user-001)...
+[2025-05-17 21:38:24] Found excluded user: test-user-001
+[2025-05-17 21:38:24] [DRY-RUN] Would skip excluded user: test-user-001
+[2025-05-17 21:38:24] Found excluded user: test-user-002
+[2025-05-17 21:38:24] [DRY-RUN] Would skip excluded user: test-user-002
+[2025-05-17 21:38:24] Found excluded user: test-user-003
+[2025-05-17 21:38:24] [DRY-RUN] Would skip excluded user: test-user-003
+[2025-05-17 21:38:24] [DRY-RUN] Would delete user: test-user-004
+[2025-05-17 21:38:24] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-004
+[2025-05-17 21:38:24] Progress: Processing identity 5/50 (ceo_rnd_oim:test-user-005)...
+[2025-05-17 21:38:24] [DRY-RUN] Would delete user: test-user-005
+[2025-05-17 21:38:25] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-005
+[2025-05-17 21:38:25] [DRY-RUN] Would delete user: test-user-006
+[2025-05-17 21:38:25] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-006
+[2025-05-17 21:38:25] [DRY-RUN] Would delete user: test-user-007
+[2025-05-17 21:38:25] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-007
+[2025-05-17 21:38:25] [DRY-RUN] Would delete user: test-user-008
+[2025-05-17 21:38:25] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-008
+[2025-05-17 21:38:25] [DRY-RUN] Would delete user: test-user-009
+[2025-05-17 21:38:25] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-009
+[2025-05-17 21:38:25] Progress: Processing identity 10/50 (ceo_rnd_oim:test-user-010)...
+[2025-05-17 21:38:25] [DRY-RUN] Would delete user: test-user-010
+[2025-05-17 21:38:25] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-010
+[2025-05-17 21:38:25] [DRY-RUN] Would delete user: test-user-011
+[2025-05-17 21:38:25] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-011
+[2025-05-17 21:38:26] [DRY-RUN] Would delete user: test-user-012
+[2025-05-17 21:38:26] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-012
+[2025-05-17 21:38:26] [DRY-RUN] Would delete user: test-user-013
+[2025-05-17 21:38:26] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-013
+[2025-05-17 21:38:26] [DRY-RUN] Would delete user: test-user-014
+[2025-05-17 21:38:26] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-014
+[2025-05-17 21:38:26] Progress: Processing identity 15/50 (ceo_rnd_oim:test-user-015)...
+[2025-05-17 21:38:26] [DRY-RUN] Would delete user: test-user-015
+[2025-05-17 21:38:26] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-015
+[2025-05-17 21:38:26] [DRY-RUN] Would delete user: test-user-016
+[2025-05-17 21:38:26] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-016
+[2025-05-17 21:38:26] [DRY-RUN] Would delete user: test-user-017
+[2025-05-17 21:38:26] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-017
+[2025-05-17 21:38:26] [DRY-RUN] Would delete user: test-user-018
+[2025-05-17 21:38:26] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-018
+[2025-05-17 21:38:27] [DRY-RUN] Would delete user: test-user-019
+[2025-05-17 21:38:27] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-019
+[2025-05-17 21:38:27] Progress: Processing identity 20/50 (ceo_rnd_oim:test-user-020)...
+[2025-05-17 21:38:27] [DRY-RUN] Would delete user: test-user-020
+[2025-05-17 21:38:27] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-020
+[2025-05-17 21:38:27] [DRY-RUN] Would delete user: test-user-021
+[2025-05-17 21:38:27] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-021
+[2025-05-17 21:38:27] [DRY-RUN] Would delete user: test-user-022
+[2025-05-17 21:38:27] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-022
+[2025-05-17 21:38:27] [DRY-RUN] Would delete user: test-user-023
+[2025-05-17 21:38:27] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-023
+[2025-05-17 21:38:27] [DRY-RUN] Would delete user: test-user-024
+[2025-05-17 21:38:27] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-024
+[2025-05-17 21:38:27] Progress: Processing identity 25/50 (ceo_rnd_oim:test-user-025)...
+[2025-05-17 21:38:27] [DRY-RUN] Would delete user: test-user-025
+[2025-05-17 21:38:27] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-025
+[2025-05-17 21:38:28] [DRY-RUN] Would delete user: test-user-026
+[2025-05-17 21:38:28] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-026
+[2025-05-17 21:38:28] [DRY-RUN] Would delete user: test-user-027
+[2025-05-17 21:38:28] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-027
+[2025-05-17 21:38:28] [DRY-RUN] Would delete user: test-user-028
+[2025-05-17 21:38:28] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-028
+[2025-05-17 21:38:28] [DRY-RUN] Would delete user: test-user-029
+[2025-05-17 21:38:28] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-029
+[2025-05-17 21:38:28] Progress: Processing identity 30/50 (ceo_rnd_oim:test-user-030)...
+[2025-05-17 21:38:28] [DRY-RUN] Would delete user: test-user-030
+[2025-05-17 21:38:28] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-030
+[2025-05-17 21:38:28] [DRY-RUN] Would delete user: test-user-031
+[2025-05-17 21:38:28] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-031
+[2025-05-17 21:38:29] [DRY-RUN] Would delete user: test-user-032
+[2025-05-17 21:38:29] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-032
+[2025-05-17 21:38:29] [DRY-RUN] Would delete user: test-user-033
+[2025-05-17 21:38:29] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-033
+[2025-05-17 21:38:29] [DRY-RUN] Would delete user: test-user-034
+[2025-05-17 21:38:29] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-034
+[2025-05-17 21:38:29] Progress: Processing identity 35/50 (ceo_rnd_oim:test-user-035)...
+[2025-05-17 21:38:29] [DRY-RUN] Would delete user: test-user-035
+[2025-05-17 21:38:29] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-035
+[2025-05-17 21:38:29] [DRY-RUN] Would delete user: test-user-036
+[2025-05-17 21:38:29] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-036
+[2025-05-17 21:38:29] [DRY-RUN] Would delete user: test-user-037
+[2025-05-17 21:38:29] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-037
+[2025-05-17 21:38:29] [DRY-RUN] Would delete user: test-user-038
+[2025-05-17 21:38:29] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-038
+[2025-05-17 21:38:30] [DRY-RUN] Would delete user: test-user-039
+[2025-05-17 21:38:30] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-039
+[2025-05-17 21:38:30] Progress: Processing identity 40/50 (ceo_rnd_oim:test-user-040)...
+[2025-05-17 21:38:30] [DRY-RUN] Would delete user: test-user-040
+[2025-05-17 21:38:30] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-040
+[2025-05-17 21:38:30] [DRY-RUN] Would delete user: test-user-041
+[2025-05-17 21:38:30] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-041
+[2025-05-17 21:38:30] [DRY-RUN] Would delete user: test-user-042
+[2025-05-17 21:38:30] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-042
+[2025-05-17 21:38:30] [DRY-RUN] Would delete user: test-user-043
+[2025-05-17 21:38:30] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-043
+[2025-05-17 21:38:30] [DRY-RUN] Would delete user: test-user-044
+[2025-05-17 21:38:30] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-044
+[2025-05-17 21:38:30] Progress: Processing identity 45/50 (ceo_rnd_oim:test-user-045)...
+[2025-05-17 21:38:31] [DRY-RUN] Would delete user: test-user-045
+[2025-05-17 21:38:31] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-045
+[2025-05-17 21:38:31] [DRY-RUN] Would delete user: test-user-046
+[2025-05-17 21:38:31] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-046
+[2025-05-17 21:38:31] [DRY-RUN] Would delete user: test-user-047
+[2025-05-17 21:38:31] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-047
+[2025-05-17 21:38:31] [DRY-RUN] Would delete user: test-user-048
+[2025-05-17 21:38:31] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-048
+[2025-05-17 21:38:31] [DRY-RUN] Would delete user: test-user-049
+[2025-05-17 21:38:31] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-049
+[2025-05-17 21:38:31] Progress: Processing identity 50/50 (ceo_rnd_oim:test-user-050)...
+[2025-05-17 21:38:31] [DRY-RUN] Would delete user: test-user-050
+[2025-05-17 21:38:31] [DRY-RUN] Would delete identity: ceo_rnd_oim:test-user-050
+[2025-05-17 21:38:31] Summary: Found 50 identities (3 excluded, 47 actionable)
+[2025-05-17 21:38:31] [DRY-RUN] Dry run complete. No actual deletions performed.
+[2025-05-17 21:38:31] [DRY-RUN] CSV file created with findings: ./reports/oc_user_audit.csv
+[2025-05-17 21:38:31] All operations completed successfully

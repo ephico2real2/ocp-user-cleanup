@@ -1,0 +1,273 @@
+[2025-05-17 21:36:41] Starting test user generator script
+[2025-05-17 21:36:41] LDAP Provider: ceo_rnd_oim
+[2025-05-17 21:36:41] User Prefix: test-user
+[2025-05-17 21:36:41] Dry Run Mode: false
+[2025-05-17 21:36:41] Cleanup Mode: false
+[2025-05-17 21:36:41] Checking dependencies...
+[2025-05-17 21:36:41] All required commands found
+[2025-05-17 21:36:41] Logged in as: kubeadmin
+[2025-05-17 21:36:42] OpenShift connection verified. Continuing...
+[2025-05-17 21:36:42] Will create 50 test users with prefix 'test-user'
+[2025-05-17 21:36:42] Auto-confirmed: Are you sure you want to create 50 test users?
+[2025-05-17 21:36:42] CSV file initialized: /Users/olasumbo/oc_user_cleanup/scripts/../reports/test_users.csv
+[2025-05-17 21:36:42] Generating 50 test users with prefix 'test-user'...
+[2025-05-17 21:36:42] Creating user: test-user-001
+[2025-05-17 21:36:42] Creating identity: ceo_rnd_oim:test-user-001
+[2025-05-17 21:36:42] Creating user identity mapping: ceo_rnd_oim:test-user-001 -> test-user-001
+[2025-05-17 21:36:42] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-001 test-user-001 (attempt 1/1)
+[2025-05-17 21:36:42] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-001 test-user-001
+[2025-05-17 21:36:42] Creating user: test-user-002
+[2025-05-17 21:36:43] Creating identity: ceo_rnd_oim:test-user-002
+[2025-05-17 21:36:43] Creating user identity mapping: ceo_rnd_oim:test-user-002 -> test-user-002
+[2025-05-17 21:36:43] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-002 test-user-002 (attempt 1/1)
+[2025-05-17 21:36:43] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-002 test-user-002
+[2025-05-17 21:36:43] Creating user: test-user-003
+[2025-05-17 21:36:43] Creating identity: ceo_rnd_oim:test-user-003
+[2025-05-17 21:36:43] Creating user identity mapping: ceo_rnd_oim:test-user-003 -> test-user-003
+[2025-05-17 21:36:43] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-003 test-user-003 (attempt 1/1)
+[2025-05-17 21:36:44] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-003 test-user-003
+[2025-05-17 21:36:44] Creating user: test-user-004
+[2025-05-17 21:36:44] Creating identity: ceo_rnd_oim:test-user-004
+[2025-05-17 21:36:44] Creating user identity mapping: ceo_rnd_oim:test-user-004 -> test-user-004
+[2025-05-17 21:36:44] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-004 test-user-004 (attempt 1/1)
+[2025-05-17 21:36:44] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-004 test-user-004
+[2025-05-17 21:36:44] Creating user: test-user-005
+[2025-05-17 21:36:44] Creating identity: ceo_rnd_oim:test-user-005
+[2025-05-17 21:36:45] Creating user identity mapping: ceo_rnd_oim:test-user-005 -> test-user-005
+[2025-05-17 21:36:45] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-005 test-user-005 (attempt 1/1)
+[2025-05-17 21:36:45] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-005 test-user-005
+[2025-05-17 21:36:45] Creating user: test-user-006
+[2025-05-17 21:36:45] Creating identity: ceo_rnd_oim:test-user-006
+[2025-05-17 21:36:45] Creating user identity mapping: ceo_rnd_oim:test-user-006 -> test-user-006
+[2025-05-17 21:36:45] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-006 test-user-006 (attempt 1/1)
+[2025-05-17 21:36:45] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-006 test-user-006
+[2025-05-17 21:36:45] Creating user: test-user-007
+[2025-05-17 21:36:46] Creating identity: ceo_rnd_oim:test-user-007
+[2025-05-17 21:36:46] Creating user identity mapping: ceo_rnd_oim:test-user-007 -> test-user-007
+[2025-05-17 21:36:46] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-007 test-user-007 (attempt 1/1)
+[2025-05-17 21:36:46] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-007 test-user-007
+[2025-05-17 21:36:46] Creating user: test-user-008
+[2025-05-17 21:36:46] Creating identity: ceo_rnd_oim:test-user-008
+[2025-05-17 21:36:46] Creating user identity mapping: ceo_rnd_oim:test-user-008 -> test-user-008
+[2025-05-17 21:36:46] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-008 test-user-008 (attempt 1/1)
+[2025-05-17 21:36:47] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-008 test-user-008
+[2025-05-17 21:36:47] Creating user: test-user-009
+[2025-05-17 21:36:47] Creating identity: ceo_rnd_oim:test-user-009
+[2025-05-17 21:36:47] Creating user identity mapping: ceo_rnd_oim:test-user-009 -> test-user-009
+[2025-05-17 21:36:47] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-009 test-user-009 (attempt 1/1)
+[2025-05-17 21:36:47] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-009 test-user-009
+[2025-05-17 21:36:47] Creating user: test-user-010
+[2025-05-17 21:36:47] Creating identity: ceo_rnd_oim:test-user-010
+[2025-05-17 21:36:47] Creating user identity mapping: ceo_rnd_oim:test-user-010 -> test-user-010
+[2025-05-17 21:36:47] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-010 test-user-010 (attempt 1/1)
+[2025-05-17 21:36:48] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-010 test-user-010
+[2025-05-17 21:36:48] Progress: 10/50 users created successfully
+[2025-05-17 21:36:48] Creating user: test-user-011
+[2025-05-17 21:36:48] Creating identity: ceo_rnd_oim:test-user-011
+[2025-05-17 21:36:48] Creating user identity mapping: ceo_rnd_oim:test-user-011 -> test-user-011
+[2025-05-17 21:36:48] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-011 test-user-011 (attempt 1/1)
+[2025-05-17 21:36:48] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-011 test-user-011
+[2025-05-17 21:36:48] Creating user: test-user-012
+[2025-05-17 21:36:48] Creating identity: ceo_rnd_oim:test-user-012
+[2025-05-17 21:36:48] Creating user identity mapping: ceo_rnd_oim:test-user-012 -> test-user-012
+[2025-05-17 21:36:49] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-012 test-user-012 (attempt 1/1)
+[2025-05-17 21:36:49] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-012 test-user-012
+[2025-05-17 21:36:49] Creating user: test-user-013
+[2025-05-17 21:36:49] Creating identity: ceo_rnd_oim:test-user-013
+[2025-05-17 21:36:49] Creating user identity mapping: ceo_rnd_oim:test-user-013 -> test-user-013
+[2025-05-17 21:36:49] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-013 test-user-013 (attempt 1/1)
+[2025-05-17 21:36:49] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-013 test-user-013
+[2025-05-17 21:36:49] Creating user: test-user-014
+[2025-05-17 21:36:49] Creating identity: ceo_rnd_oim:test-user-014
+[2025-05-17 21:36:50] Creating user identity mapping: ceo_rnd_oim:test-user-014 -> test-user-014
+[2025-05-17 21:36:50] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-014 test-user-014 (attempt 1/1)
+[2025-05-17 21:36:50] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-014 test-user-014
+[2025-05-17 21:36:50] Creating user: test-user-015
+[2025-05-17 21:36:50] Creating identity: ceo_rnd_oim:test-user-015
+[2025-05-17 21:36:50] Creating user identity mapping: ceo_rnd_oim:test-user-015 -> test-user-015
+[2025-05-17 21:36:50] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-015 test-user-015 (attempt 1/1)
+[2025-05-17 21:36:50] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-015 test-user-015
+[2025-05-17 21:36:50] Creating user: test-user-016
+[2025-05-17 21:36:51] Creating identity: ceo_rnd_oim:test-user-016
+[2025-05-17 21:36:51] Creating user identity mapping: ceo_rnd_oim:test-user-016 -> test-user-016
+[2025-05-17 21:36:51] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-016 test-user-016 (attempt 1/1)
+[2025-05-17 21:36:51] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-016 test-user-016
+[2025-05-17 21:36:51] Creating user: test-user-017
+[2025-05-17 21:36:51] Creating identity: ceo_rnd_oim:test-user-017
+[2025-05-17 21:36:51] Creating user identity mapping: ceo_rnd_oim:test-user-017 -> test-user-017
+[2025-05-17 21:36:51] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-017 test-user-017 (attempt 1/1)
+[2025-05-17 21:36:52] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-017 test-user-017
+[2025-05-17 21:36:52] Creating user: test-user-018
+[2025-05-17 21:36:52] Creating identity: ceo_rnd_oim:test-user-018
+[2025-05-17 21:36:52] Creating user identity mapping: ceo_rnd_oim:test-user-018 -> test-user-018
+[2025-05-17 21:36:52] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-018 test-user-018 (attempt 1/1)
+[2025-05-17 21:36:52] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-018 test-user-018
+[2025-05-17 21:36:52] Creating user: test-user-019
+[2025-05-17 21:36:52] Creating identity: ceo_rnd_oim:test-user-019
+[2025-05-17 21:36:52] Creating user identity mapping: ceo_rnd_oim:test-user-019 -> test-user-019
+[2025-05-17 21:36:53] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-019 test-user-019 (attempt 1/1)
+[2025-05-17 21:36:53] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-019 test-user-019
+[2025-05-17 21:36:53] Creating user: test-user-020
+[2025-05-17 21:36:53] Creating identity: ceo_rnd_oim:test-user-020
+[2025-05-17 21:36:53] Creating user identity mapping: ceo_rnd_oim:test-user-020 -> test-user-020
+[2025-05-17 21:36:53] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-020 test-user-020 (attempt 1/1)
+[2025-05-17 21:36:53] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-020 test-user-020
+[2025-05-17 21:36:53] Progress: 20/50 users created successfully
+[2025-05-17 21:36:53] Creating user: test-user-021
+[2025-05-17 21:36:54] Creating identity: ceo_rnd_oim:test-user-021
+[2025-05-17 21:36:54] Creating user identity mapping: ceo_rnd_oim:test-user-021 -> test-user-021
+[2025-05-17 21:36:54] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-021 test-user-021 (attempt 1/1)
+[2025-05-17 21:36:54] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-021 test-user-021
+[2025-05-17 21:36:54] Creating user: test-user-022
+[2025-05-17 21:36:54] Creating identity: ceo_rnd_oim:test-user-022
+[2025-05-17 21:36:54] Creating user identity mapping: ceo_rnd_oim:test-user-022 -> test-user-022
+[2025-05-17 21:36:54] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-022 test-user-022 (attempt 1/1)
+[2025-05-17 21:36:55] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-022 test-user-022
+[2025-05-17 21:36:55] Creating user: test-user-023
+[2025-05-17 21:36:55] Creating identity: ceo_rnd_oim:test-user-023
+[2025-05-17 21:36:55] Creating user identity mapping: ceo_rnd_oim:test-user-023 -> test-user-023
+[2025-05-17 21:36:55] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-023 test-user-023 (attempt 1/1)
+[2025-05-17 21:36:55] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-023 test-user-023
+[2025-05-17 21:36:55] Creating user: test-user-024
+[2025-05-17 21:36:55] Creating identity: ceo_rnd_oim:test-user-024
+[2025-05-17 21:36:56] Creating user identity mapping: ceo_rnd_oim:test-user-024 -> test-user-024
+[2025-05-17 21:36:56] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-024 test-user-024 (attempt 1/1)
+[2025-05-17 21:36:56] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-024 test-user-024
+[2025-05-17 21:36:56] Creating user: test-user-025
+[2025-05-17 21:36:56] Creating identity: ceo_rnd_oim:test-user-025
+[2025-05-17 21:36:56] Creating user identity mapping: ceo_rnd_oim:test-user-025 -> test-user-025
+[2025-05-17 21:36:56] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-025 test-user-025 (attempt 1/1)
+[2025-05-17 21:36:56] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-025 test-user-025
+[2025-05-17 21:36:56] Creating user: test-user-026
+[2025-05-17 21:36:57] Creating identity: ceo_rnd_oim:test-user-026
+[2025-05-17 21:36:57] Creating user identity mapping: ceo_rnd_oim:test-user-026 -> test-user-026
+[2025-05-17 21:36:57] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-026 test-user-026 (attempt 1/1)
+[2025-05-17 21:36:57] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-026 test-user-026
+[2025-05-17 21:36:57] Creating user: test-user-027
+[2025-05-17 21:36:57] Creating identity: ceo_rnd_oim:test-user-027
+[2025-05-17 21:36:57] Creating user identity mapping: ceo_rnd_oim:test-user-027 -> test-user-027
+[2025-05-17 21:36:57] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-027 test-user-027 (attempt 1/1)
+[2025-05-17 21:36:58] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-027 test-user-027
+[2025-05-17 21:36:58] Creating user: test-user-028
+[2025-05-17 21:36:58] Creating identity: ceo_rnd_oim:test-user-028
+[2025-05-17 21:36:58] Creating user identity mapping: ceo_rnd_oim:test-user-028 -> test-user-028
+[2025-05-17 21:36:58] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-028 test-user-028 (attempt 1/1)
+[2025-05-17 21:36:58] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-028 test-user-028
+[2025-05-17 21:36:58] Creating user: test-user-029
+[2025-05-17 21:36:58] Creating identity: ceo_rnd_oim:test-user-029
+[2025-05-17 21:36:58] Creating user identity mapping: ceo_rnd_oim:test-user-029 -> test-user-029
+[2025-05-17 21:36:59] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-029 test-user-029 (attempt 1/1)
+[2025-05-17 21:36:59] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-029 test-user-029
+[2025-05-17 21:36:59] Creating user: test-user-030
+[2025-05-17 21:36:59] Creating identity: ceo_rnd_oim:test-user-030
+[2025-05-17 21:36:59] Creating user identity mapping: ceo_rnd_oim:test-user-030 -> test-user-030
+[2025-05-17 21:36:59] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-030 test-user-030 (attempt 1/1)
+[2025-05-17 21:36:59] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-030 test-user-030
+[2025-05-17 21:36:59] Progress: 30/50 users created successfully
+[2025-05-17 21:36:59] Creating user: test-user-031
+[2025-05-17 21:36:59] Creating identity: ceo_rnd_oim:test-user-031
+[2025-05-17 21:36:59] Creating user identity mapping: ceo_rnd_oim:test-user-031 -> test-user-031
+[2025-05-17 21:37:00] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-031 test-user-031 (attempt 1/1)
+[2025-05-17 21:37:00] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-031 test-user-031
+[2025-05-17 21:37:00] Creating user: test-user-032
+[2025-05-17 21:37:00] Creating identity: ceo_rnd_oim:test-user-032
+[2025-05-17 21:37:00] Creating user identity mapping: ceo_rnd_oim:test-user-032 -> test-user-032
+[2025-05-17 21:37:00] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-032 test-user-032 (attempt 1/1)
+[2025-05-17 21:37:00] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-032 test-user-032
+[2025-05-17 21:37:00] Creating user: test-user-033
+[2025-05-17 21:37:00] Creating identity: ceo_rnd_oim:test-user-033
+[2025-05-17 21:37:01] Creating user identity mapping: ceo_rnd_oim:test-user-033 -> test-user-033
+[2025-05-17 21:37:01] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-033 test-user-033 (attempt 1/1)
+[2025-05-17 21:37:01] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-033 test-user-033
+[2025-05-17 21:37:01] Creating user: test-user-034
+[2025-05-17 21:37:01] Creating identity: ceo_rnd_oim:test-user-034
+[2025-05-17 21:37:01] Creating user identity mapping: ceo_rnd_oim:test-user-034 -> test-user-034
+[2025-05-17 21:37:01] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-034 test-user-034 (attempt 1/1)
+[2025-05-17 21:37:01] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-034 test-user-034
+[2025-05-17 21:37:01] Creating user: test-user-035
+[2025-05-17 21:37:02] Creating identity: ceo_rnd_oim:test-user-035
+[2025-05-17 21:37:02] Creating user identity mapping: ceo_rnd_oim:test-user-035 -> test-user-035
+[2025-05-17 21:37:02] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-035 test-user-035 (attempt 1/1)
+[2025-05-17 21:37:02] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-035 test-user-035
+[2025-05-17 21:37:02] Creating user: test-user-036
+[2025-05-17 21:37:02] Creating identity: ceo_rnd_oim:test-user-036
+[2025-05-17 21:37:02] Creating user identity mapping: ceo_rnd_oim:test-user-036 -> test-user-036
+[2025-05-17 21:37:03] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-036 test-user-036 (attempt 1/1)
+[2025-05-17 21:37:03] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-036 test-user-036
+[2025-05-17 21:37:03] Creating user: test-user-037
+[2025-05-17 21:37:03] Creating identity: ceo_rnd_oim:test-user-037
+[2025-05-17 21:37:03] Creating user identity mapping: ceo_rnd_oim:test-user-037 -> test-user-037
+[2025-05-17 21:37:03] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-037 test-user-037 (attempt 1/1)
+[2025-05-17 21:37:03] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-037 test-user-037
+[2025-05-17 21:37:03] Creating user: test-user-038
+[2025-05-17 21:37:03] Creating identity: ceo_rnd_oim:test-user-038
+[2025-05-17 21:37:04] Creating user identity mapping: ceo_rnd_oim:test-user-038 -> test-user-038
+[2025-05-17 21:37:04] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-038 test-user-038 (attempt 1/1)
+[2025-05-17 21:37:04] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-038 test-user-038
+[2025-05-17 21:37:04] Creating user: test-user-039
+[2025-05-17 21:37:04] Creating identity: ceo_rnd_oim:test-user-039
+[2025-05-17 21:37:04] Creating user identity mapping: ceo_rnd_oim:test-user-039 -> test-user-039
+[2025-05-17 21:37:04] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-039 test-user-039 (attempt 1/1)
+[2025-05-17 21:37:04] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-039 test-user-039
+[2025-05-17 21:37:04] Creating user: test-user-040
+[2025-05-17 21:37:05] Creating identity: ceo_rnd_oim:test-user-040
+[2025-05-17 21:37:05] Creating user identity mapping: ceo_rnd_oim:test-user-040 -> test-user-040
+[2025-05-17 21:37:05] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-040 test-user-040 (attempt 1/1)
+[2025-05-17 21:37:05] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-040 test-user-040
+[2025-05-17 21:37:05] Progress: 40/50 users created successfully
+[2025-05-17 21:37:05] Creating user: test-user-041
+[2025-05-17 21:37:05] Creating identity: ceo_rnd_oim:test-user-041
+[2025-05-17 21:37:05] Creating user identity mapping: ceo_rnd_oim:test-user-041 -> test-user-041
+[2025-05-17 21:37:06] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-041 test-user-041 (attempt 1/1)
+[2025-05-17 21:37:06] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-041 test-user-041
+[2025-05-17 21:37:06] Creating user: test-user-042
+[2025-05-17 21:37:06] Creating identity: ceo_rnd_oim:test-user-042
+[2025-05-17 21:37:06] Creating user identity mapping: ceo_rnd_oim:test-user-042 -> test-user-042
+[2025-05-17 21:37:06] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-042 test-user-042 (attempt 1/1)
+[2025-05-17 21:37:06] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-042 test-user-042
+[2025-05-17 21:37:06] Creating user: test-user-043
+[2025-05-17 21:37:07] Creating identity: ceo_rnd_oim:test-user-043
+[2025-05-17 21:37:07] Creating user identity mapping: ceo_rnd_oim:test-user-043 -> test-user-043
+[2025-05-17 21:37:07] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-043 test-user-043 (attempt 1/1)
+[2025-05-17 21:37:07] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-043 test-user-043
+[2025-05-17 21:37:07] Creating user: test-user-044
+[2025-05-17 21:37:07] Creating identity: ceo_rnd_oim:test-user-044
+[2025-05-17 21:37:07] Creating user identity mapping: ceo_rnd_oim:test-user-044 -> test-user-044
+[2025-05-17 21:37:07] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-044 test-user-044 (attempt 1/1)
+[2025-05-17 21:37:08] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-044 test-user-044
+[2025-05-17 21:37:08] Creating user: test-user-045
+[2025-05-17 21:37:08] Creating identity: ceo_rnd_oim:test-user-045
+[2025-05-17 21:37:08] Creating user identity mapping: ceo_rnd_oim:test-user-045 -> test-user-045
+[2025-05-17 21:37:08] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-045 test-user-045 (attempt 1/1)
+[2025-05-17 21:37:08] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-045 test-user-045
+[2025-05-17 21:37:08] Creating user: test-user-046
+[2025-05-17 21:37:08] Creating identity: ceo_rnd_oim:test-user-046
+[2025-05-17 21:37:09] Creating user identity mapping: ceo_rnd_oim:test-user-046 -> test-user-046
+[2025-05-17 21:37:09] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-046 test-user-046 (attempt 1/1)
+[2025-05-17 21:37:09] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-046 test-user-046
+[2025-05-17 21:37:09] Creating user: test-user-047
+[2025-05-17 21:37:09] Creating identity: ceo_rnd_oim:test-user-047
+[2025-05-17 21:37:09] Creating user identity mapping: ceo_rnd_oim:test-user-047 -> test-user-047
+[2025-05-17 21:37:09] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-047 test-user-047 (attempt 1/1)
+[2025-05-17 21:37:10] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-047 test-user-047
+[2025-05-17 21:37:10] Creating user: test-user-048
+[2025-05-17 21:37:10] Creating identity: ceo_rnd_oim:test-user-048
+[2025-05-17 21:37:10] Creating user identity mapping: ceo_rnd_oim:test-user-048 -> test-user-048
+[2025-05-17 21:37:10] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-048 test-user-048 (attempt 1/1)
+[2025-05-17 21:37:10] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-048 test-user-048
+[2025-05-17 21:37:10] Creating user: test-user-049
+[2025-05-17 21:37:10] Creating identity: ceo_rnd_oim:test-user-049
+[2025-05-17 21:37:10] Creating user identity mapping: ceo_rnd_oim:test-user-049 -> test-user-049
+[2025-05-17 21:37:10] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-049 test-user-049 (attempt 1/1)
+[2025-05-17 21:37:11] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-049 test-user-049
+[2025-05-17 21:37:11] Creating user: test-user-050
+[2025-05-17 21:37:11] Creating identity: ceo_rnd_oim:test-user-050
+[2025-05-17 21:37:11] Creating user identity mapping: ceo_rnd_oim:test-user-050 -> test-user-050
+[2025-05-17 21:37:11] Executing: oc create useridentitymapping ceo_rnd_oim:test-user-050 test-user-050 (attempt 1/1)
+[2025-05-17 21:37:11] Command succeeded: oc create useridentitymapping ceo_rnd_oim:test-user-050 test-user-050
+[2025-05-17 21:37:11] Progress: 50/50 users created successfully
+[2025-05-17 21:37:11] Generation complete:
+[2025-05-17 21:37:11]   Created: 50
+[2025-05-17 21:37:11]   Skipped: 0
+[2025-05-17 21:37:11]   Failed: 0
+[2025-05-17 21:37:11]   Total processed: 50
