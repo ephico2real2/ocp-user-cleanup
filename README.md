@@ -143,7 +143,7 @@ Location:
 
 ## 📜 License
 
-Copyright (c) 2025 OpenShift User & Identity Cleanup Tool
+Copyright (c) 2025 ephico2real2 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -156,7 +156,7 @@ furnished to do so, subject to the following conditions:
 1. The above copyright notice and this permission notice shall be included in all
    copies or substantial portions of the Software.
 2. Any project using this Software or its substantial portions must include visible
-   attribution to the original project (https://github.com/olasumbo/oc_user_cleanup)
+   attribution to the original project (https://github.com/ephico2real2/ocp-user-cleanup)
    in documentation, user interfaces, or other appropriate locations.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
